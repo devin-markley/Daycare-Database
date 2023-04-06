@@ -1,0 +1,90 @@
+Western Slope Daycare Management
+
+Western Slope Daycare Management is a web application designed to help manage various aspects of a childcare program, including providers, children, meals, and attendance. The application uses a PostgreSQL database to store data.
+Features
+
+    Retrieve all providers from the database.
+    Retrieve children associated with a given provider.
+    Retrieve active children associated with a given provider.
+    Add a child to the database.
+    Add a meal and attendance information to the database.
+    Update the active status of children in the database.
+    Generate an individual attendance report for a specific child.
+    Generate a monthly attendance report for a specific provider.
+
+Application Structure
+
+The code is organized into a Model-View-Controller (MVC) architecture:
+
+controller.php
+
+controller.php serves as the controller for the web application. It handles HTTP requests and responses, and invokes the appropriate functions from model.php and view.php. The main purpose of controller.php is to handle user input, validate it, and call the appropriate functions to perform the necessary database operations or display the requested information.
+
+model.php
+
+model.php performs the necessary database operations using the following functions:
+
+    get_providers($db): Retrieves all providers from the database.
+    get_children_by_provider($db, $provider_id): Retrieves children associated with the given provider.
+    get_active_children($db, $provider_id): Retrieves active children associated with the given provider.
+    add_child_to_database($db, $provider_id, $first_name, $last_name, $starting_date, $active_status): Adds a child to the database.
+    add_meal_and_attendance($db, $date_served, $fruit_vegetables, $child_ids): Adds a meal and attendance information to the database.
+    update_children_status($children, $db): Updates the active status of children in the database.
+    individual_attendance_report($db, $provider_id, $child_id, $report_month): Generates an individual attendance report for a specific child.
+    monthly_attendance_report($db, $report_month, $provider_id): Generates a monthly attendance report for a specific provider.
+
+view.php
+
+view.php generates HTML templates using the data gathered by model.php and contains the following functions:
+
+    build_children_table_html($children, $provider_id): Builds an HTML table displaying children's information based on their provider ID.
+    attendance_form($children): Generates an HTML attendance form that allows providers to add active children to the attendance record.
+    attendance_summary_table($attendance): Generates an HTML table summarizing attendance information.
+    build_individual_attendance_report($attendance_report): Builds an individual attendance report in HTML table format.
+    render($template, $params): Renders an HTML template with the provided parameters.
+
+
+
+
+    -- Create provider table
+CREATE TABLE provider (
+    provider_id SERIAL PRIMARY KEY,
+    provider_name VARCHAR(255) NOT NULL
+);
+
+-- Create child table
+CREATE TABLE child (
+    child_id SERIAL PRIMARY KEY,
+    provider_id INTEGER NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    starting_date DATE NOT NULL,
+    active_status BOOLEAN NOT NULL,
+    FOREIGN KEY (provider_id) REFERENCES provider(provider_id)
+);
+
+-- Create meal_content table
+CREATE TABLE meal_content (
+    meal_content_id SERIAL PRIMARY KEY,
+    fruit VARCHAR(255) NOT NULL,
+    vegetables VARCHAR(255) NOT NULL
+);
+
+-- Create meal table
+CREATE TABLE meal (
+    meal_id SERIAL PRIMARY KEY,
+    meal_content_id INTEGER NOT NULL,
+    date_served DATE NOT NULL,
+    FOREIGN KEY (meal_content_id) REFERENCES meal_content(meal_content_id)
+);
+
+-- Create attendance table
+CREATE TABLE attendance (
+    attendance_id SERIAL PRIMARY KEY,
+    child_id INTEGER NOT NULL,
+    meal_id INTEGER NOT NULL,
+    provider_id INTEGER NOT NULL,
+    FOREIGN KEY (child_id) REFERENCES child(child_id),
+    FOREIGN KEY (meal_id) REFERENCES meal(meal_id),
+    FOREIGN KEY (provider_id) REFERENCES provider(provider_id)
+);

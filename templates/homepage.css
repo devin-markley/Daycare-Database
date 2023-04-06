@@ -1,0 +1,58 @@
+body {
+    display: flex;
+    justify-content: center;
+    background-image: url("images/hero_2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+}
+  
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* height: 100px;
+    background-color: rgba(2, 2, 3, 0.8); */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+  
+.brand-name {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-left: 200px;
+    color: white;
+    font-family: Tahoma, sans-serif;
+    font-size: 30px;
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+}
+  
+.provider-buttons {
+    display: flex;
+    align-items: center;
+    padding-right: 200px;
+    padding-top: 30px;
+}
+
+.providerbutt {
+    margin-right: 10px;
+    background-color: transparent;
+    font-size: 20px;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 30px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.providerbutt:hover {
+    background-color: blue;
+}
