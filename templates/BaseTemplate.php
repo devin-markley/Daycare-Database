@@ -5,6 +5,9 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div>
+        <h1>Hello World</h1>
+        <?php echo $content; ?>
+    </div>
 </body>
 </html>
