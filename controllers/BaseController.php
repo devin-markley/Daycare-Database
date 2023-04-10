@@ -3,11 +3,6 @@ abstract class BaseController
 {
     protected $model;
     protected $view;
-    public function __construct()
-    {
-        // $this->model = $model;
-        // $this->view = $view;
-    }
 
     // Default action for the controller
     public function index()

@@ -11,37 +11,33 @@ error_reporting(E_ALL);
  * Include the necessary controller files.
  */
 require_once 'controllers/HomeController.php';
-// require_once 'controllers/ProviderController.php';
-
-/**
-* Include the necessary model files.
-*/
-// require_once 'models/HomeModel.php';
-
-/**
-* Include the necessary model files.
-*/
-// require_once 'views/HomeView.php';
+require_once 'controllers/ProviderController.php';
 
 /**
  * Set the default page to 'homepage' if not specified.
  */
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+
+$controller = null;
 
 switch ($page) {
     case 'home':
-        // $homeModel = new HomeModel();
-        // $homeView = new View();
-        $controller = new homeController();
-        $controller->index();
+        $controller = new HomeController();
         break;
     case 'provider':
-        $controller = new providerController();
-        $controller->index();
+        $controller = new ProviderController();
         break;
     default:
         http_response_code(404);
         echo '404 - Page not found';
 }
 
-?>
+if ($controller !== null) {
+    if (method_exists($controller, $action)) {
+        $controller->$action($_GET);
+    } else {
+        http_response_code(404);
+        echo '404 - Action not found';
+    }
+}

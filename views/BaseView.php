@@ -14,9 +14,9 @@ abstract class BaseView {
 
     public function render() {
         $path = 'templates/' . $this->template . '.php';
-
+    
         if (file_exists($path)) {
-            extract($this->data);
+            $_data = $this->data; 
             ob_start();
             include($path);
             $content = ob_get_clean();
@@ -25,7 +25,7 @@ abstract class BaseView {
             throw new Exception('Template ' . $this->template . ' not found!');
         }
     }
-
+    
     protected function renderLayout($content) {
         $path = 'templates/BaseTemplate.php';
 

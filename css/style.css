@@ -1,59 +1,160 @@
 body {
-    display: flex;
-    justify-content: center;
-    background-image: url("/img/hero_2.jpg");
+  display: flex;
+  justify-content: center;
+  background-image: url("/img/hero_2.jpg");
+  background-repeat: no-repeat;
 }
 
 .nav-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 200px;
-    background-color: rgba(2, 2, 3, 0.8);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background-color: rgba(2, 2, 3, 0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }
-  
-.brand-name {
-    display: flex;
-    align-items: center;
 
-    padding-left: 200px;
-    color: white;
-    font-family: Tahoma, sans-serif;
-    font-size: 30px;
+.brand-name {
+  display: flex;
+  align-items: center;
+
+  padding-left: 200px;
+  color: white;
+  font-family: Tahoma, sans-serif;
+  font-size: 30px;
 }
 
 .nav-buttons {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
-  
+
 .provider-buttons {
-    display: flex;
-    align-items: center;
-    padding-right: 200px;
-  }
-  
-  .provider-buttons button {
-    margin-right: 20px;
-    padding: 10px 20px;
-    background-color: white;
-    border: none;
-    color: #333;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 25px;
-  }
-  
-  .provider-buttons button:hover {
-    background-color: blue;
-    color: white;
-  }
-  
+  display: flex;
+  align-items: center;
+  padding-right: 200px;
+}
 
+.provider-buttons button {
+  margin-right: 20px;
+  padding: 10px 20px;
+  background-color: white;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 25px;
+}
 
+.provider-buttons button:hover {
+  background-color: blue;
+  color: white;
+}
 
+/* ProviderTemplate */
+h1{
+  color: white;
+}
+
+.provider-template {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column, .right-column {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(43, 38, 38, 0.5);
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 50px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.right-column{
+  flex: 1;
+}
+
+.left-column{
+  flex: 1;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  background-color: #ddd;
+  font-weight: bold;
+  text-align: left;
+}
+
+td,
+th {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+/* form styles */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+form label {
+  margin-bottom: 10px;
+}
+
+form select {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+form input[type=submit] {
+  padding: 10px 20px;
+  background-color: blue;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 25px;
+  clear: both;
+}
+
+form input[type=submit]:hover {
+  background-color: white;
+  color: blue;
+}
+
+/* form-specific styles */
+form table {
+  margin-bottom: 0;
+}
+
+form table th,
+form table td {
+  text-align: center;
+}
+
+form table th:first-child,
+form table td:first-child {
+  text-align: left;
+}
+
+form table input[type=checkbox] {
+  margin: 0;
+}

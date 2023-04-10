@@ -8,8 +8,7 @@ class HomeController extends BaseController {
     public function index() {
         $model = new HomeModel();
         $providers = $model->getAllProviders();
-
-        $view = new HomeView('HomeTemplate');
+        $view = new HomeView();
         $view->setData(['providers' => $providers]);
         $view->render();
     }
