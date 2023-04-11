@@ -1,8 +1,27 @@
 <?php
 require_once 'libraries/TCPDF-main/tcpdf.php';
 
+/*
+Class PdfGenerator
+Generates PDF documents using the TCPDF library.
+*/
+
 class PdfGenerator
 {
+    /*
+
+    Generates a PDF of an attendance summary report.
+
+    @param array $summaryData An array containing the attendance summary data.
+
+    @param string|array $providerName The name of the provider.
+
+    @param string|array $reportStartDate The start date of the report.
+
+    @param array $mealTableData An array containing the meal table data.
+
+    @return void
+    */
     public static function generateAttendanceSummaryPDF($summaryData, $providerName, $reportStartDate, $mealTableData)
     {
         // create new PDF document

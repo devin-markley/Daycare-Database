@@ -1,12 +1,26 @@
 <?php
 require_once 'BaseModel.php';
 
+/**
+ * The ProviderModel class is responsible for managing the provider data.
+ */
 class ProviderModel extends BaseModel
 {
+    /**
+     * Initializes the ProviderModel instance.
+     */
     public function __construct()
     {
         parent::__construct();
     }
+
+    /**
+     * Retrieves all children of a provider.
+     *
+     * @param int $providerId The ID of the provider.
+     *
+     * @return array An array of child records.
+     */
     public function getAllChildrenByProvider($providerId)
     {
         $sql = "SELECT * FROM child WHERE provider_id = :providerId";
@@ -14,6 +28,14 @@ class ProviderModel extends BaseModel
         return $result;
     }
 
+    /**
+     * Updates the active status of a child.
+     *
+     * @param int $childId The ID of the child.
+     * @param bool $activeStatus The new active status of the child.
+     * 
+     * @return void
+     */
     public function updateChildActiveStatus($childId, $activeStatus)
     {
         $sql = "UPDATE child SET active_status = :active_status WHERE child_id = :child_id";
@@ -23,6 +45,17 @@ class ProviderModel extends BaseModel
         ]);
     }
 
+    /**
+     * Inserts a new child record.
+     *
+     * @param string $firstName The first name of the child.
+     * @param string $lastName The last name of the child.
+     * @param string $startingDate The starting date of the child.
+     * @param bool $activeStatus The active status of the child.
+     * @param int $providerId The ID of the provider.
+     * 
+     * @return void
+     */
     public function insertChild($firstName, $lastName, $startingDate, $activeStatus, $providerId)
     {
         $sql = "INSERT INTO child (first_name, last_name, starting_date, active_status, provider_id) VALUES (:first_name, :last_name, :starting_date, :active_status, :provider_id)";
@@ -35,6 +68,18 @@ class ProviderModel extends BaseModel
         ]);
     }
 
+    /**
+     * Inserts a new attendance record.
+     *
+     * @param int $providerId The ID of the provider.
+     * @param string $mealDate The date of the meal.
+     * @param string $mealTime The time of the meal.
+     * @param bool $containsFruit Whether the meal contains fruit.
+     * @param bool $containsVegetables Whether the meal contains vegetables.
+     * @param array $selectedChildren The IDs of the children in attendance.
+     * 
+     * @return void
+     */
     public function insertAttendance($providerId, $mealDate, $mealTime, $containsFruit, $containsVegetables, $selectedChildren)
     {
         // Insert meal_content
@@ -65,7 +110,13 @@ class ProviderModel extends BaseModel
             ]);
         }
     }
-
+    /**
+     * Retrieves all active children of a provider.
+     *
+     * @param int $providerId The ID of the provider.
+     *
+     * @return array An array of child records.
+     */
     public function getAllActiveChildrenByProvider($providerId)
     {
         $sql = "SELECT * FROM child WHERE provider_id = :providerId AND active_status = TRUE";
@@ -75,19 +126,23 @@ class ProviderModel extends BaseModel
         return $result;
     }
 
+    /**
+     * Retrieves the attendance summary for an individual child.
+     *
+     * @param int $childId The ID of the child.
+     * @param string $reportStartDate The start date of the report.
+     *
+     * @return array An array of attendance records.
+     */
     public function getIndividualAttendanceSummary($childId, $reportStartDate)
     {
         $sql = "SELECT m.date_served, m.meal_id, mc.fruit, mc.vegetables
-        FROM attendance AS a
-        JOIN meal AS m ON a.meal_id = m.meal_id
-        JOIN meal_content AS mc ON m.meal_content_id = mc.meal_content_id
-        WHERE a.child_id = :child_id
-        AND m.date_served >= :report_start_date
-        AND m.date_served < :report_start_date + interval '1 month'
-        
-        
-        ";
-
+    FROM attendance AS a
+    JOIN meal AS m ON a.meal_id = m.meal_id
+    JOIN meal_content AS mc ON m.meal_content_id = mc.meal_content_id
+    WHERE a.child_id = :child_id
+    AND m.date_served >= :report_start_date
+    AND m.date_served < :report_start_date + interval '1 month'";
         $result = $this->query($sql, [
             ':child_id' => $childId,
             ':report_start_date' => $reportStartDate,
@@ -96,6 +151,14 @@ class ProviderModel extends BaseModel
         return $result;
     }
 
+    /**
+     * Retrieves the attendance summary for a provider.
+     *
+     * @param int $providerId The ID of the provider.
+     * @param string $reportStartDate The start date of the report.
+     *
+     * @return array An array of attendance records.
+     */
     public function getProviderAttendanceSummary($providerId, $reportStartDate)
     {
         $sql = "SELECT COUNT(child.child_id) AS total_children_fed, 
@@ -120,6 +183,13 @@ class ProviderModel extends BaseModel
         return $result;
     }
 
+    /**
+     * Retrieves the name of a provider.
+     *
+     * @param int $providerId The ID of the provider.
+     *
+     * @return array An array containing the provider name.
+     */
     public function getProviderName($providerId)
     {
         $sql = "SELECT provider_name FROM provider WHERE provider_id = :provider_id";
@@ -130,19 +200,27 @@ class ProviderModel extends BaseModel
         return $result;
     }
 
+    /**
+     * Retrieves the meal table for a provider.
+     *
+     * @param int $providerID The ID of the provider.
+     * @param string $reportStartDate The start date of the report.
+     *
+     * @return array An array containing the meal table records.
+     */
     public function getMealTable($providerID, $reportStartDate)
     {
         $sql = "
-            SELECT mc.fruit, mc.vegetables, m.date_served, COUNT(DISTINCT a.child_id) AS num_children
-            FROM meal m
-            JOIN meal_content mc ON m.meal_content_id = mc.meal_content_id
-            JOIN attendance a ON m.meal_id = a.meal_id
-            JOIN child c ON a.child_id = c.child_id
-            WHERE c.provider_id = :provider_id
-            AND m.date_served >= :report_start_date
-            AND m.date_served < date_trunc('month', :report_start_date) + INTERVAL '1 month'
-            GROUP BY mc.fruit, mc.vegetables, m.date_served
-        ";
+        SELECT mc.fruit, mc.vegetables, m.date_served, COUNT(DISTINCT a.child_id) AS num_children
+        FROM meal m
+        JOIN meal_content mc ON m.meal_content_id = mc.meal_content_id
+        JOIN attendance a ON m.meal_id = a.meal_id
+        JOIN child c ON a.child_id = c.child_id
+        WHERE c.provider_id = :provider_id
+        AND m.date_served >= :report_start_date
+        AND m.date_served < date_trunc('month', :report_start_date) + INTERVAL '1 month'
+        GROUP BY mc.fruit, mc.vegetables, m.date_served
+    ";
 
         $result = $this->query($sql, [
             ':provider_id' => $providerID,

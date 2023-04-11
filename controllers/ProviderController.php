@@ -4,9 +4,16 @@ require_once 'BaseController.php';
 require_once 'models/ProviderModel.php';
 require_once 'views/ProviderView.php';
 
+/**
+ * The ProviderController class is responsible for managing the provider page.
+ */
 class ProviderController extends BaseController
 {
-
+    /**
+     * Displays the provider page.
+     *
+     * @return void
+     */
     public function index()
     {
         if (isset($_GET['provider_id'])) {
@@ -22,6 +29,11 @@ class ProviderController extends BaseController
         $view->render();
     }
 
+    /**
+     * Updates the active status of a child.
+     *
+     * @return void
+     */
     public function updateActiveStatus()
     {
         $providerId = $_SESSION['provider_id'] ?? null;
@@ -34,6 +46,11 @@ class ProviderController extends BaseController
         header('Location: index.php?page=provider&action=index&provider_id=' . $providerId);
     }
 
+    /**
+     * Adds a child to the provider.
+     *
+     * @return void
+     */
     public function addChild()
     {
         $providerId = $_SESSION['provider_id'] ?? null;
@@ -49,6 +66,11 @@ class ProviderController extends BaseController
 
     }
 
+    /**
+     * Records attendance for the provider.
+     *
+     * @return void
+     */
     public function recordAttendance()
     {
         $providerId = $_SESSION['provider_id'] ?? null;
@@ -65,6 +87,11 @@ class ProviderController extends BaseController
         header('Location: index.php?page=provider&action=index&provider_id=' . $providerId);
     }
 
+    /**
+     * Generates a PDF of the provider attendance summary.
+     *
+     * @return void
+     */
     public function attendanceSummaryPDF()
     {
         $providerId = $_SESSION['provider_id'] ?? null;
@@ -82,6 +109,11 @@ class ProviderController extends BaseController
         exit;
     }
 
+    /**
+     * Generates a PDF of an individual child's attendance summary.
+     *
+     * @return void
+     */
     public function childAttendanceSummaryPDF()
     {
         $providerId = isset($_SESSION['provider_id']) ? $_SESSION['provider_id'] : null;
@@ -97,4 +129,5 @@ class ProviderController extends BaseController
         PdfGenerator::generateIndividualAttendanceSummaryPDF($summaryData, $providerName, $reportStartDate);
         exit;
     }
+
 }

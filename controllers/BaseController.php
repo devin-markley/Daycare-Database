@@ -1,37 +1,65 @@
 <?php
+/*
+The abstract BaseController class is the base class for all controllers.
+*/
 abstract class BaseController
 {
+    /*
+    The model object used by the controller.
+    @var object $model
+    */
     protected $model;
+
+    /*
+    The view object used by the controller.
+    @var object $view
+    */
     protected $view;
 
-    // Default action for the controller
+    /*
+    The default action for the controller.
+    @return void
+    */
     public function index()
     {
         // Do something by default
     }
 
-    // Set the model for the controller
+    /*
+    Sets the model for the controller.
+    @param object $model The model object to set.
+    @return void
+    */
     public function setModel($model)
     {
         $this->model = $model;
     }
 
-    // Get the model for the controller
+    /*
+    Gets the model for the controller.
+    @return object The model object.
+    */
     public function getModel()
     {
         return $this->model;
     }
 
-    // Set the view for the controller
+    /*
+    Sets the view for the controller.
+    @param object $view The view object to set.
+    @return void
+    */
     public function setView($view)
     {
         $this->view = $view;
     }
 
-    // Get the view for the controller
+    /*
+    Gets the view for the controller.
+    @return object The view object.
+    */
     public function getView()
     {
         return $this->view;
     }
-
 }

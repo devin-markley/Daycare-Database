@@ -10,9 +10,15 @@ $(document).ready(function() {
             data: { childId: childId, activeStatus: activeStatus },
             success: function(response) {
                 // Handle the response from the PHP script here
+                if (response.success) {
+                    console.log('Active status updated successfully!');
+                } else {
+                    console.error('Error updating active status: ' + response.message);
+                }
             },
             error: function(xhr, status, error) {
                 // Handle errors here
+                console.error('AJAX error: ' + error);
             }
         });
     });

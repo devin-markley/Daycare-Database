@@ -1,8 +1,20 @@
 <?php
 require_once 'libraries/TCPDF-main/tcpdf.php';
 
+/**
+ * The PdfGenerator class generates PDF files for attendance summary reports.
+ */
+
 class PdfGenerator
 {
+    /**
+     * Generates a PDF file of individual attendance summary report for a provider.
+     *
+     * @param array $summaryData The attendance summary data for the individual.
+     * @param string|array $providerName The name of the provider for the report.
+     * @param string|array $reportStartDate The start date of the report.
+     * @return void
+     */
     public static function generateIndividualAttendanceSummaryPDF($summaryData, $providerName, $reportStartDate)
     {
         // create new PDF document
